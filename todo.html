@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Home Page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+      	body{
+  		
+  		background-size: 100%;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+  	}
+    .navbar{
+  position: fixed;
+  transition: 1s;
+  background-color: black;
+  z-index: 100;
+}
+  .navbar-brand{
+  		color: white;
+  		font-size: 25px;
+  		font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  		cursor: pointer;
+          text-shadow:2px 2px skyblue;
+          font-weight: 900;
+  	}
+  	.icon-bar{
+  background-color: #000;
+
+}
+  	.nav{
+  		font-family: Lithos Pro;
+  		color: #fff;
+  		padding: 10px 20px;
+          background-color: black;
+  	}
+  	.nav li{
+  		padding: 10px;
+  		cursor: pointer;
+  		font-size: 16px;
+  	}
+    .nav li:after{
+      content: '';
+      display: block;
+        border-bottom: 2px solid #38fd07;
+        transform: scaleX(0);
+        transition: .2s ease-in-out;
+    }
+  	.nav li:hover:after{
+  	   transform: scaleX(1);
+  	}
+    
+    body::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  
+}
+body::-webkit-scrollbar
+{
+  width: 14px;
+}
+
+body::-webkit-scrollbar-thumb
+{
+  
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.5);
+  background:  #501e27;
+}
+@media(max-width: 720px){
+  body{
+    background-size: 100% 100%;
+  }
+  .para{
+    min-height: 800px;
+  }
+}
+</style>
+<body >
+
+<div class="navbar navbar-fixed-top container-fluid" id="navbar">
+  	 <div class="navbar-header">
+      <button type="button" class="navbar-toggle navbar-default" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand">MY TODO</a>
+    </div>
+    <div class="collapse navbar-right navbar-collapse" id="myNavbar">
+    	<ul class="nav navbar-nav">
+<li style="font-size: x-large;font-weight: bolder;"><a href="index.html"  style="color: white;">Home</a></li>
+    		<li style="font-size: x-large;font-weight: bolder;"><a style="color: white;" href="todo.html">Todo</a></li>
+    		<li style="font-size: x-large;font-weight: bolder;"><a  style="color: white;" href="login.html">Logout</a></li>
+    		<li style="font-size: x-large;font-weight: bolder;"><a  style="color: white;" href="https://reach.at/d-c-events">Help</a></li>
+    	</ul>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+      <table class="table table-stripped table-bordered" id="table" style="margin-top: 25px;font-family: Verdana, Geneva, Tahoma, sans-serif;font-weight: 500;">
+        <thead class="thead">
+          <tr style="text-align: center;">
+            <th style="color: black;font-family: verdana;">#</th>
+            <th style="color: black;font-family: verdana;">Todo</th>
+            <th style="color: black;font-family: verdana;">Completed</th>
+            
+          </tr>
+        </thead>
+        <tbody id="data">
+
+        </tbody>
+
+      </table>
+      <!-- ToDo table end -->
+      <div id="background-wrap">
+        <div class="x1">
+            <div class="cloud"></div>
+        </div>
+    
+        <div class="x2">
+            <div class="cloud"></div>
+        </div>
+    
+        <div class="x3">
+            <div class="cloud"></div>
+        </div>
+    
+        <div class="x4">
+            <div class="cloud"></div>
+        </div>
+    
+        <div class="x5">
+            <div class="cloud"></div>
+        </div>
+    </div>
+      
+     
+      
+    
+</body>
+
+<script>
+  window.onload = ajax;
+var response
+var count = 0;
+function ajax(){
+    //XMLHTTP request object
+    var xhr = new XMLHttpRequest();
+    var url = "https://jsonplaceholder.typicode.com/todos";
+    xhr.open("GET",url,true);
+
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+        var response = JSON.parse(this.responseText);
+            var output = "";
+            for(var i=0;i<response.length;i++){
+                output += "<tr>";
+                output += "<td>" + response[i].id + "</td>";
+                output += "<td>" + response[i].title + "</td>";
+                if(response[i].completed == false){
+                    output += "<th>"+ "<input type =\"checkbox\" id="+i+" onclick = \"check("+i+");\">" + "</input>" + "</th>"; 
+                }
+                else{
+                    output += "<th>" + "<input type=\"checkbox\" checked disabled>" + "</input>" + "</th>";
+                }
+                output += "</tr>"
+            document.getElementById("data").innerHTML = output;
+            }
+        }
+    }
+
+      
+
+    xhr.send();
+}
+var tag = document.getElementsByTagName("input");
+function check(t){
+var temp = document.getElementById(t);
+   var promise = new Promise(function(resolve,reject){
+        if(temp.checked == true)
+        resolve();
+    else
+        reject();
+
+    })
+    
+    promise
+    .then(function(){
+        count++;
+        display();
+    })
+    .catch(function(){
+        count--;
+        display();
+    })
+    function display(){
+        if(count == 5)
+        alert("Congrats. 5 Tasks have been Successfully Completed");
+    }
+}
+
+    </script>
+     
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+  </body>
+</html>
